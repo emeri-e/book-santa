@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Santa Claus - Magical Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 1em;
+            font-family: Arial;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+            animation: snowfall linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Twinkling stars */
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 0, 0, 0.1);
+            animation: slideIn 0.8s ease-out, float 3s ease-in-out infinite;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            color: #d32f2f;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .emotional-copy {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe5e5 100%);
+            border-left: 4px solid #d32f2f;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            font-style: italic;
+            color: #555;
+            line-height: 1.8;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .emotional-copy strong {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+
+        .memory-tagline {
+            text-align: center;
+            color: #d32f2f;
+            font-size: 0.95em;
+            margin-top: 10px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .santa-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: wiggle 3s infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-5deg); }
+            75% { transform: rotate(5deg); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            animation: slideInLeft 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .package-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .package-card {
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .package-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .package-card:hover::before {
+            left: 100%;
+        }
+
+        .package-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .package-card.selected {
+            border-color: #d32f2f;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            box-shadow: 0 0 30px rgba(211, 47, 47, 0.5), 0 0 60px rgba(211, 47, 47, 0.3);
+            transform: scale(1.05);
+            animation: selectedPulse 0.6s ease-out, selectedGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes selectedPulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.7);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 0 20px rgba(211, 47, 47, 0);
+            }
+            100% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(211, 47, 47, 0.5);
+            }
+        }
+
+        @keyframes selectedGlow {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(211, 47, 47, 0.5), 0 0 60px rgba(211, 47, 47, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(211, 47, 47, 0.7), 0 0 80px rgba(211, 47, 47, 0.4);
+            }
+        }
+
+        .package-card.selected .package-title {
+            animation: titleBounce 0.6s ease-out;
+        }
+
+        @keyframes titleBounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            25% {
+                transform: scale(1.2) rotate(-5deg);
+            }
+            50% {
+                transform: scale(1.15) rotate(5deg);
+            }
+            75% {
+                transform: scale(1.1) rotate(-2deg);
+            }
+        }
+
+        .celebration-emoji {
+            position: absolute;
+            font-size: 2em;
+            pointer-events: none;
+            animation: celebrate 1.5s ease-out forwards;
+            z-index: 100;
+        }
+
+        @keyframes celebrate {
+            0% {
+                opacity: 0;
+                transform: translateY(0) scale(0) rotate(0deg);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(-20px) scale(1.2) rotate(180deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-80px) scale(0.8) rotate(360deg);
+            }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #d32f2f;
+            animation: confettiFall 1.5s ease-out forwards;
+            pointer-events: none;
+        }
+
+        .confetti:nth-child(odd) {
+            background: #ffd700;
+        }
+
+        .confetti:nth-child(3n) {
+            background: #4caf50;
+        }
+
+        .confetti:nth-child(4n) {
+            background: #2196f3;
+        }
+
+        @keyframes confettiFall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(200px) rotate(720deg);
+            }
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(211, 47, 47, 0.3);
+            transform: scale(0);
+            animation: rippleEffect 0.8s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes rippleEffect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .package-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 40px;
+            height: 40px;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.5);
+            animation: checkmarkPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 10;
+        }
+
+        @keyframes checkmarkPop {
+            0% {
+                transform: scale(0) rotate(-180deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(10deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px) translateY(0); }
+            20%, 40%, 60%, 80% { transform: translateX(5px) translateY(0); }
+        }
+
+        .package-card input[type="radio"] {
+            display: none;
+        }
+
+        .package-title {
+            font-size: 1.3em;
+            color: #d32f2f;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .package-description {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .package-benefit {
+            color: #d32f2f;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 8px;
+            display: block;
+        }
+
+        .package-benefit::before {
+            content: '💝 ';
+        }
+
+        .package-price {
+            margin-top: 12px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #d32f2f;
+            text-align: center;
+            padding: 10px;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+            border-radius: 8px;
+            border: 2px solid #d32f2f;
+        }
+
+        .package-price .currency {
+            font-size: 0.7em;
+            color: #666;
+            font-weight: normal;
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #d32f2f;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        input[type="date"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="date"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+            box-shadow: 0 0 10px rgba(211, 47, 47, 0.2);
+            transform: scale(1.02);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .submit-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            animation: sparkle 1.5s infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .package-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div id="snowflakes"></div>
+
+    <!-- Stars -->
+    <div id="stars"></div>
+
+        <div class="container">
+        <div class="header">
+            <div class="santa-icon">🎅</div>
+            <h1>Give Your Child a Christmas They'll Never Forget</h1>
+            <p class="subtitle">The magic in their eyes. The wonder in their smile. The memory that lasts forever.</p>
+            <div class="emotional-copy">
+                <strong>Every child deserves to believe in magic.</strong> This year, give them more than just presents—give them a moment of pure wonder that they'll treasure for a lifetime. Watch their faces light up as Santa arrives, creating a memory that will warm your heart for years to come.
+            </div>
+            <p class="memory-tagline">✨ Because childhood magic is priceless ✨</p>
+        </div>
+
+        <form id="bookingForm">
+            <div class="form-group">
+                <label>Choose the Magic You Want to Create</label>
+                <div class="package-options">
+                    <div class="package-card" onclick="selectPackage('standard')">
+                        <input type="radio" name="package" value="standard" id="standard">
+                        <div class="package-title">🎁 Standard Magic</div>
+                        <div class="package-description">A heartwarming visit that brings pure joy to your little ones. Perfect for creating those precious moments of wonder and excitement.</div>
+                        <span class="package-benefit">A memory they'll cherish forever</span>
+                        <div class="package-price">
+                            ₦300,000<span class="currency"> NGN</span>
+                        </div>
+                    </div>
+                    <div class="package-card" onclick="selectPackage('fleet')">
+                        <input type="radio" name="package" value="fleet" id="fleet">
+                        <div class="package-badge">MOST MEMORABLE</div>
+                        <div class="package-title">🛷 Santa Fleet Experience</div>
+                        <div class="package-description">The grand entrance they've always dreamed of! Santa arrives in a magnificent carriage—the ultimate Christmas moment that will leave them speechless with wonder.</div>
+                        <span class="package-benefit">The story they'll tell for years</span>
+                        <div class="package-price">
+                            ₦1,000,000<span class="currency"> NGN</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="date">📅 Choose the Day They'll Remember Forever</label>
+                <input type="date" id="date" name="date" required min="" placeholder="Select the perfect day for magic">
+            </div>
+
+            <div class="form-group">
+                <label for="time">⏰ Preferred Time</label>
+                <input type="time" id="time" name="time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="details">💌 Tell Us About Your Little Stars</label>
+                <textarea id="details" name="details" placeholder="Help us make this perfect for your children! Tell us their names, ages, what they're hoping for this Christmas, any special needs, or anything that will make this moment even more magical for them..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                ✨ Create Their Magical Moment - Book Now ✨
+            </button>
+            <p style="text-align: center; margin-top: 15px; color: #888; font-size: 0.9em; line-height: 1.6;">
+                <em>"The best gift you can give your child is a memory they'll treasure forever."</em>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+
+        // Create snowflakes
+        function createSnowflakes() {
+            const snowflakesContainer = document.getElementById('snowflakes');
+            const snowflakeSymbols = ['❄', '❅', '❆'];
+            
+            for (let i = 0; i < 50; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowflakeSymbols[Math.floor(Math.random() * snowflakeSymbols.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 2 + 's';
+                snowflakesContainer.appendChild(snowflake);
+            }
+        }
+
+        // Create stars
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            
+            for (let i = 0; i < 30; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Package selection
+        function selectPackage(packageType) {
+            const clickedCard = event.currentTarget;
+            
+            // Remove selected class from all cards
+            document.querySelectorAll('.package-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            clickedCard.classList.add('selected');
+            
+            // Check the radio button
+            document.getElementById(packageType).checked = true;
+            
+            // Create celebration animations
+            createCelebrationAnimations(clickedCard);
+        }
+
+        // Create celebration animations when package is selected
+        function createCelebrationAnimations(card) {
+            const rect = card.getBoundingClientRect();
+            const cardCenterX = rect.left + rect.width / 2;
+            const cardCenterY = rect.top + rect.height / 2;
+            
+            // Celebration emojis
+            const emojis = ['🎉', '✨', '🎊', '🌟', '⭐', '💫', '🎁', '🛷'];
+            emojis.forEach((emoji, index) => {
+                setTimeout(() => {
+                    const emojiEl = document.createElement('div');
+                    emojiEl.className = 'celebration-emoji';
+                    emojiEl.textContent = emoji;
+                    emojiEl.style.left = (cardCenterX + (Math.random() - 0.5) * 100) + 'px';
+                    emojiEl.style.top = (cardCenterY + (Math.random() - 0.5) * 50) + 'px';
+                    document.body.appendChild(emojiEl);
+                    
+                    setTimeout(() => emojiEl.remove(), 1500);
+                }, index * 100);
+            });
+            
+            // Confetti particles
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = (cardCenterX + (Math.random() - 0.5) * 150) + 'px';
+                    confetti.style.top = cardCenterY + 'px';
+                    confetti.style.animationDelay = (Math.random() * 0.3) + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 1500);
+                }, i * 30);
+            }
+            
+            // Ripple effect
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.width = '100px';
+            ripple.style.height = '100px';
+            ripple.style.left = (cardCenterX - 50) + 'px';
+            ripple.style.top = (cardCenterY - 50) + 'px';
+            document.body.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 800);
+            
+            // Add a subtle shake to the container for extra fun
+            const container = document.querySelector('.container');
+            container.style.animation = 'shake 0.5s ease-in-out';
+            setTimeout(() => {
+                container.style.animation = 'float 3s ease-in-out infinite';
+            }, 500);
+        }
+
+        // Form submission
+        document.getElementById('bookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const packageType = document.querySelector('input[name="package"]:checked');
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const details = document.getElementById('details').value;
+            
+            if (!packageType) {
+                alert('✨ Please choose the magical experience you want to create for your children! ✨');
+                return;
+            }
+            
+            if (!date) {
+                alert('📅 Please select the perfect day for your children\'s magical moment! 📅');
+                return;
+            }
+
+            if (!time) {
+                alert('⏰ Please select your preferred time for the magical visit! ⏰');
+                return;
+            }
+
+            // Format the message
+            const packageName = packageType.value === 'standard' ? 'Standard Magic Package' : 'Santa Fleet Experience (with Carriage Entrance)';
+            const packagePrice = packageType.value === 'standard' ? '₦300,000' : '₦1,000,000';
+            const packageDescription = packageType.value === 'standard' 
+                ? 'Creating precious memories of wonder and joy' 
+                : 'The ultimate Christmas moment they\'ll never forget';
+            
+            // Format time for display
+            const timeParts = time.split(':');
+            const hours = parseInt(timeParts[0]);
+            const minutes = timeParts[1];
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            const displayHours = hours % 12 || 12;
+            const formattedTime = `${displayHours}:${minutes} ${ampm}`;
+            
+            const message = `*Creating Magical Memories for Your Little Ones*
+
+*Package Selected:* ${packageName}
+*Price:* ${packagePrice} NGN
+${packageDescription}
+
+*Date of Magic:* ${new Date(date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+*Preferred Time:* ${formattedTime}
+
+*About Your Children:*
+${details || 'Ready to create an unforgettable experience!'}
+
+We're so excited to help you create a moment your children will treasure forever!
+
+Thank you for choosing to make this Christmas magical!`;
+
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // WhatsApp number (Nigeria)
+            const whatsappNumber = '2347064950025';
+            
+            // Redirect to WhatsApp
+            window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+            
+            // Add sparkle effect
+            createSparkles();
+        });
+
+        // Create sparkle effect on submit
+        function createSparkles() {
+            const btn = document.getElementById('submitBtn');
+            for (let i = 0; i < 20; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = Math.random() * 100 + '%';
+                sparkle.style.top = Math.random() * 100 + '%';
+                sparkle.style.animationDelay = Math.random() * 0.5 + 's';
+                btn.appendChild(sparkle);
+                
+                setTimeout(() => sparkle.remove(), 1500);
+            }
+        }
+
+        // Initialize animations
+        createSnowflakes();
+        createStars();
+    </script>
+</body>
+</html>
